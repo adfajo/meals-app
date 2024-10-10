@@ -67,11 +67,11 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       activePageTitle = 'Shopping List';
     }
     if (_selectedPageIndex == 2) {
-      final shoppingList = ref.watch(shoppingListProvider); // EDIT THIS LATER
-      activePage = MealsScreen(
-        meals: shoppingList,
+      //final shoppingList = ref.watch(shoppingListProvider); // EDIT THIS LATER
+      activePage = ShoppingListScreen(
+        //meals: shoppingList,
       );
-      activePageTitle = 'Shopping List';
+      //activePageTitle = 'Shopping List';
     }
 
     return Scaffold(
