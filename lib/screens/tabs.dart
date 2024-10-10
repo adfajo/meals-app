@@ -88,7 +88,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
               icon: Icon(Icons.set_meal), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.list), label: 'Shopping List'),
+              icon: Icon(Icons.shopping_cart), label: 'Shopping List'),
         ],
       ),
     );
