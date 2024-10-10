@@ -53,7 +53,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       availableMeals: availableMeals,
     );
 
-
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
@@ -62,16 +61,11 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         meals: favoriteMeals,
       );
       activePageTitle = 'Your Favorites';
-    } else if (_selectedPageIndex == 2) {
-      activePage = const ShoppingListScreen();
-      activePageTitle = 'Shopping List';
     }
     if (_selectedPageIndex == 2) {
-      //final shoppingList = ref.watch(shoppingListProvider); // EDIT THIS LATER
-      activePage = ShoppingListScreen(
-        //meals: shoppingList,
-      );
-      //activePageTitle = 'Shopping List';
+      final shoppingList = ref.watch(shoppingListProvider);
+      activePage = ShoppingListScreen();
+      activePageTitle = 'Shopping List';
     }
 
     return Scaffold(

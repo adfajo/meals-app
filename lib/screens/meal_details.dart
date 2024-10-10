@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/models/meal.dart';
@@ -91,7 +89,7 @@ class MealDetailsScreen extends ConsumerWidget {
               onTap: () {
                 final wasAdded = ref
                     .read(shoppingListProvider.notifier)
-                    .toggleAddShoppingListStatus(meal);
+                    .toggleAddShoppingListStatus(meal, ref);
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
