@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/providers/shopping_list_provider.dart';
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/filters.dart';
 import 'package:meals/screens/meals.dart';
@@ -65,6 +66,13 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       activePage = const ShoppingListScreen();
       activePageTitle = 'Shopping List';
     }
+    if (_selectedPageIndex == 2) {
+      final shoppingList = ref.watch(shoppingListProvider); // EDIT THIS LATER
+      activePage = MealsScreen(
+        meals: shoppingList,
+      );
+      activePageTitle = 'Shopping List';
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +87,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.set_meal), label: 'Categories'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Shopping list' )
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list), label: 'Shopping List'),
         ],
       ),
     );
