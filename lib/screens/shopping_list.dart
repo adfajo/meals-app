@@ -36,13 +36,15 @@ class _ShoppingListScreenState extends ConsumerState<ShoppingListScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              meal.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Colors.white),
-            ),
+            Row(children: [
+              Text(
+                meal.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(color: Colors.white),
+              ),
+            ]),
             ...List.generate(meal.ingredients.length, (ingredientIndex) {
               return Row(
                 children: [
