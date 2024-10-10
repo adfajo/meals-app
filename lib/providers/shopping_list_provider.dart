@@ -8,12 +8,6 @@ class ShoppingListNotifier extends StateNotifier<List<Meal>> {
     final ingredientsAreAdded = state.contains(meal);
 
     if (ingredientsAreAdded) {
-      // Remove the meal
-      state = state.where((m) => m != meal).toList();
-      // Update checkbox states
-      ref.read(checkboxStateProvider.notifier).updateCheckboxStates(
-          List<List<bool>>.generate(state.length,
-              (index) => List.filled(state[index].ingredients.length, false)));
       return false;
     } else {
       // Add the meal
@@ -24,6 +18,14 @@ class ShoppingListNotifier extends StateNotifier<List<Meal>> {
               (index) => List.filled(state[index].ingredients.length, false)));
       return true;
     }
+  }
+
+  bool toggleDeleteShoppingListStatus(Meal meal, WidgetRef ref) {
+    state = state.where((m) => m != meal).toList();
+    ref.read(checkboxStateProvider.notifier).updateCheckboxStates(
+        List<List<bool>>.generate(state.length,
+            (index) => List.filled(state[index].ingredients.length, false)));
+    return true;
   }
 }
 

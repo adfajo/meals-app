@@ -36,15 +36,34 @@ class _ShoppingListScreenState extends ConsumerState<ShoppingListScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(children: [
-              Text(
-                meal.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: Colors.white),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    meal.title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Colors.white),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        final wasAdded = ref
+                            .read(shoppingListProvider.notifier)
+                            .toggleDeleteShoppingListStatus(meal, ref);
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Ingredients deleted!'),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.delete))
+                ],
               ),
-            ]),
+            ),
             ...List.generate(meal.ingredients.length, (ingredientIndex) {
               return Row(
                 children: [
