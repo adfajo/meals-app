@@ -13,3 +13,8 @@ As a user I want to be able to track what ingredients I need when creating certa
 ![alt text](image.png)
 
 ## Screenshots
+![alt text](Screenshots/Main_Menu.PNG)
+![alt text](Screenshots/Dish.PNG)
+
+![alt text](Screenshots/Your_Favourites.PNG)
+![alt text](Screenshots/ShoppingList.PNG)
