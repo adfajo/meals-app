@@ -33,58 +33,75 @@ class _ShoppingListScreenState extends ConsumerState<ShoppingListScreen> {
       itemCount: shoppingList.length,
       itemBuilder: (context, mealIndex) {
         final meal = shoppingList[mealIndex];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    meal.title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        meal.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          final wasAdded = ref
+                              .read(shoppingListProvider.notifier)
+                              .toggleDeleteShoppingListStatus(meal, ref);
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Ingredients deleted!'),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                      )
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {
-                        final wasAdded = ref
-                            .read(shoppingListProvider.notifier)
-                            .toggleDeleteShoppingListStatus(meal, ref);
-                        ScaffoldMessenger.of(context).clearSnackBars();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Ingredients deleted!'),
+                  const SizedBox(height: 10),  // Space between title and ingredients
+                  ...List.generate(meal.ingredients.length, (ingredientIndex) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: checkboxStates[mealIndex][ingredientIndex],
+                            onChanged: (bool? value) {
+                              ref.read(checkboxStateProvider.notifier).toggleCheckbox(
+                                  mealIndex, ingredientIndex, value ?? false);
+                            },
                           ),
-                        );
-                      },
-                      icon: const Icon(Icons.delete))
+                          Text(
+                            meal.ingredients[ingredientIndex],
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
-            ...List.generate(meal.ingredients.length, (ingredientIndex) {
-              return Row(
-                children: [
-                  Checkbox(
-                    value: checkboxStates[mealIndex][ingredientIndex],
-                    onChanged: (bool? value) {
-                      ref.read(checkboxStateProvider.notifier).toggleCheckbox(
-                          mealIndex, ingredientIndex, value ?? false);
-                    },
-                  ),
-                  Text(
-                    meal.ingredients[ingredientIndex],
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: Colors.white),
-                  ),
-                ],
-              );
-            }),
-          ],
+          ),
         );
       },
     );
